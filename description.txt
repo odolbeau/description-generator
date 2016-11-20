@@ -1,0 +1,2 @@
+This {tool|library|piece of code} goal is to generate {different|original} descriptions from a {given|} file.
+The {first|main} purpose if to declinate a {product|website} description for {partners|directories}.

@@ -1,0 +1,46 @@
+#!/usr/bin/env php
+<?php
+
+if (!isset($argv[1])) {
+    echo <<<EOL
+Missing file argument.
+
+Usage:
+    ./generate description.txt > generated_description.txt
+
+EOL;
+
+    exit(1);
+}
+
+$file = $argv[1];
+
+if (!file_exists($file)) {
+    echo "Unkown file $file.\n";
+
+    exit(1);
+}
+
+$text = file_get_contents($file);
+
+$result = preg_match_all('#{(.*?)}#', $text, $matches);
+
+if (false === $result) {
+    echo 'An error eccurred.';
+    exit(1);
+}
+
+if (0 === $result) {
+    echo 'No replacement string found.';
+    exit(1);
+}
+
+foreach ($matches[1] as $match) {
+    $choices = explode('|', $match);
+
+    $choice = $choices[rand(0, count($choices) - 1)];
+
+    $text = preg_replace("#\{".str_replace('|', '\|', $match)."\}#", $choice, $text);
+}
+
+echo $text;
